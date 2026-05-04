@@ -13,15 +13,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Install PyYAML
-        run: python -m pip install pyyaml
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install -e .[dev]
 
       - name: Validate required files
         run: |
           test -f README.md
           test -f LICENSE
           test -f .gitignore
+          test -f CONTRIBUTING.md
+          test -f pyproject.toml
           test -f docs/personal-operations-harness.md
+          test -f docs/architecture.md
+          test -f docs/roadmap.md
+          test -f docs/data-model.md
+          test -f docs/open-source-project-shape.md
 
       - name: Check markdown files are non-empty
         run: |
@@ -39,3 +50,6 @@ jobs:
                   yaml.safe_load(f)
           print(f"validated {len(files)} yaml files")
           PY
+
+      - name: Run tests
+        run: pytest -q

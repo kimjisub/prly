@@ -1,86 +1,144 @@
 # prly
 
-Prly is an open-source **personal operations harness**.
+Prly is an open-source **personal operations harness**: a system that observes the signals around your work and turns them into actionable queues, drafts, and reports.
 
-It continuously observes personal work signals — mail, chat, calendar, reminders, session history, and system health — then turns them into:
+> **gbrain remembers. Prly executes.**
 
-- actionable queue entries
-- draft replies and follow-ups
-- morning / progress / daily reports
-- durable fact fan-out into long-term memory systems
+Long-term memory helps you recall people, projects, conversations, and decisions. Prly sits on top of that memory layer and handles the operational loop:
 
-## Core idea
+- detect new signals
+- normalize them into a common model
+- decide what matters now
+- create safe, deduplicated actions
+- generate drafts and operator-facing reports
 
-> gbrain is memory. Prly is execution.
+## What problem it solves
 
-Long-term memory systems are good at remembering people, projects, decisions, and relationships.
-Prly is the operational layer on top: it notices new signals, classifies what matters, creates actions safely, and presents concise reports.
+Modern personal work is fragmented across:
 
-## Product loop
+- mail
+- chat / Slack / Discord
+- calendar
+- reminders / task managers
+- recent AI or IDE sessions
+- local machine and service health
+
+Most tools stop at *showing* information. Prly is about turning that information into an execution layer.
+
+## Core loop
 
 ```text
 Observe -> Normalize -> Understand -> Act -> Report -> Learn
 ```
 
-## Initial scope
+## Repository goals
+
+This repository aims to become a practical, open-source foundation for:
+
+- personal operations pipelines
+- common item schemas for heterogeneous sources
+- safe action execution with idempotency
+- report composition from shared artifacts
+- durable-memory fan-out into knowledge systems
+
+## Scope
 
 ### Inputs
 - mail metadata
-- Slack / chat signals
+- chat signals
 - calendar events
-- reminders state
+- reminders / task state
 - session history
-- local machine / service health
+- local health and runtime state
 
 ### Outputs
 - TODO candidates
 - reminder actions
-- draft replies
-- progress updates
-- daily summaries
+- reply / follow-up drafts
+- morning reports
+- progress / interrupt reports
+- daily wrap-up reports
 
 ## Principles
 
-1. collect once
-2. normalize into a common item model
-3. separate understanding from execution
-4. make actions idempotent
-5. send only durable facts to long-term memory
+1. **collect once** — shared artifacts beat repeated live reads
+2. **normalize early** — use a common item model across sources
+3. **separate understanding from execution** — classification and actioning are different responsibilities
+4. **prefer idempotency over cleverness** — duplicate actions destroy trust
+5. **fan out durable facts only** — not every operational event belongs in long-term memory
+6. **degrade visibly** — source failures should be explicit, not silent
 
-## Repository structure
+## Initial repository layout
 
 ```text
-.github/                 GitHub workflows and contribution templates
-/docs/                   product and architecture docs
+.github/                     GitHub workflows, templates, and project hygiene
+/docs/                       Product, architecture, roadmap, and contributor docs
++/packages/prly-core/         Core Python package for shared schemas and orchestration primitives (`import prly_core`)
++/tests/                      Repository-level tests
 ```
 
-## Roadmap
+## Quick start
 
-### Phase 1 — shared pipeline
-- snapshot storage
-- normalized item model
-- classified outputs
-- reports read shared artifacts instead of live sources
+```bash
+git clone https://github.com/kimjisub/prly.git
+cd prly
+python3 -m venv .venv
+source .venv/bin/activate
+python -m ensurepip --upgrade
+python -m pip install --upgrade pip
+pip install -e .[dev]
+pytest -q
+```
 
-### Phase 2 — execution layer
+## What exists today
+
+- repository bootstrap and CI
+- initial product framing
+- starter Python core package structure
+- starter schema tests
+- roadmap and issue scaffolding
+
+## Documentation
+
+- [Personal Operations Harness spec](docs/personal-operations-harness.md)
+- [Architecture overview](docs/architecture.md)
+- [Roadmap](docs/roadmap.md)
+- [Contributing guide](CONTRIBUTING.md)
+
+## Roadmap snapshot
+
+### Phase 1 — Shared pipeline
+- source snapshots
+- normalized item schema
+- classified artifacts
+- reports built from shared artifacts only
+
+### Phase 2 — Execution layer
 - reminder executor
 - draft generator
-- action logs
-- dedupe / idempotency
+- action log and dedupe state
 
-### Phase 3 — approval policies
-- auto vs approval-gated execution
-- review queue
-- source-specific policies
+### Phase 3 — Policy layer
+- approval queue
+- auto-vs-manual action policies
+- source health and degraded mode semantics
 
-### Phase 4 — learning and memory fan-out
-- durable fact extraction
-- user preference learning
-- signal/noise improvement loop
+### Phase 4 — Learning layer
+- durable fact promotion
+- preference learning
+- signal/noise optimization
 
-## Status
+## Contributing
 
-Early repository bootstrap. The current focus is open-source framing, workflow scaffolding, and architecture definition.
+Contributions are welcome, especially around:
+
+- source adapters
+- shared schemas
+- action safety / dedupe design
+- report composition
+- local-first workflow tooling
+
+Please start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
