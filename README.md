@@ -2,9 +2,9 @@
 
 Prly is an open-source **personal operations harness**: a system that observes the signals around your work and turns them into actionable queues, drafts, and reports.
 
-> **gbrain remembers. Prly executes.**
+> **Prly turns signals into execution.**
 
-Long-term memory helps you recall people, projects, conversations, and decisions. Prly sits on top of that memory layer and handles the operational loop:
+Long-term context helps you recall people, projects, conversations, and decisions. Prly sits on top of that context layer and handles the operational loop:
 
 - detect new signals
 - normalize them into a common model

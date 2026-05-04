@@ -1,6 +1,6 @@
 # Personal Operations Harness
 
-> **gbrain is memory. Prly is execution.**
+> **Prly is an execution layer for personal operations.**
 
 Prly defines an operational layer that continuously collects work signals and turns them into executable actions, drafts, and reports.
 
